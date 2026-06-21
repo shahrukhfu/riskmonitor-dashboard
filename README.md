@@ -1,10 +1,18 @@
 # AlphaRisk Terminal: Institutional Risk Ledger
 
-AlphaRisk is a professional-grade, high-fidelity **Real-Time Financial Risk Dashboard** scaffolding designed for high-stakes institutional analytics. The project simulates live streaming of financial transactions (utilizing the synthetic Paysim dataset) over WebSockets and analyzes risk metrics dynamically on a custom-tailword, premium dark UI.
+AlphaRisk is a professional-grade, high-fidelity Real-Time Financial Risk Dashboard designed for high-stakes institutional analytics. The project simulates live streaming of financial transactions (utilizing the synthetic Paysim dataset) over WebSockets and analyzes risk metrics dynamically on a custom-tailored, premium dark UI.
 
 ---
 
-## 🛠️ System Architecture
+## Live Performance Demo
+
+Below is the recording showing the interactive UI flow and the live stream of transactions updating in real time:
+
+![AlphaRisk Live Dashboard Demo](./ui_mocks/risk_dashboard_run.webp)
+
+---
+
+## System Architecture
 
 The following diagram illustrates how transaction data is streamed, processed, and visualized across the stack:
 
@@ -35,25 +43,53 @@ graph TD
 
 ---
 
-## ✨ Features
+## Features
 
-- 🔄 **Live WebSocket Stream**: Transaction events are read sequentially in chunks from `dataset.csv` and pushed directly to clients with sub-second latencies.
-- 📊 **Dynamic Analytics Engine**: Aggregates total transaction volumes and active risk indexes on-the-fly inside React states.
-- ⚡ **Bento Grid layout**: Dark, high-density layout prioritizing technical information, clear visual structure, and zero clutter.
-- 🛡️ **Rule-Based Risk Classification**: Automatically labels incoming payments, cash-outs, and transfers based on size, flag conditions, and origin metrics.
-- ⚠️ **System Health Logging**: Automatically intercepts critical, high-risk flags and registers them in the system log.
-- 🖱️ **Micro-Interactions**: Row hover visual states and temporary background flash triggers on clicks mimic institutional Bloomberg/Reuters terminal behavior.
+<details>
+<summary><b>Real-Time WebSocket Ingest</b> (Click to expand)</summary>
+
+Transactions are read sequentially in chunks from the database and pushed directly to clients with sub-second latencies over `/ws/transactions`, avoiding any standard database querying or HTTP polling overhead.
+</details>
+
+<details>
+<summary><b>Dynamic Institutional Metrics</b> (Click to expand)</summary>
+
+Aggregates total volumes and rolling risk indexes dynamically inside React states on every incoming packet. The active risk score updates instantly using a weighted risk level sum.
+</details>
+
+<details>
+<summary><b>Premium Matte Aesthetics</b> (Click to expand)</summary>
+
+A dark, high-density dashboard prioritizing technical data density. Custom slate panels are separated by 1px borders to limit eye strain during long-term monitoring, adhering to corporate minimalism.
+</details>
+
+<details>
+<summary><b>Auto-Responding Security Alerts</b> (Click to expand)</summary>
+
+Intercepts critical fraud flags or abnormally high amounts and automatically registers them in the system log with high-priority warnings.
+</details>
 
 ---
 
-## 💻 Tech Stack
+## Interface Micro-Animations & Interactivity
+
+The user interface implements intentional micro-animations to highlight events without cluttering the screen:
+
+- **Connection Heartbeat**: The status dot in the header pulsates green when the WebSocket connection is active, and switches to a red alert warning state if the server disconnects.
+- **Row Interaction Flash**: Clicking any row in the transaction table flashes the item with a subtle blue/charcoal background tint, fading out over 300ms.
+- **Progress Transitions**: The risk distribution bars slide dynamically as percentages shift in response to the transaction stream.
+- **Auto-Scroll Stream**: The ledger rows dynamically animate and scroll downwards as new messages arrive.
+
+---
+
+## Tech Stack
 
 * **Backend**: Python 3.10+, FastAPI, Pandas, Uvicorn, Websockets.
 * **Frontend**: React 19, TypeScript, Vite, Tailwind CSS v4, PostCSS, Google Material Symbols.
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 Financial Risk Detector/
@@ -80,11 +116,11 @@ Financial Risk Detector/
 
 ---
 
-## 🚀 Quick Start Instructions
+## Quick Start Instructions
 
-Follow these simple steps to run the full-stack system locally:
+<details>
+<summary><b>1. Configure the Backend (FastAPI)</b></summary>
 
-### 1. Configure the Backend (FastAPI)
 Navigate to the backend directory and launch the server:
 ```bash
 cd backend
@@ -97,8 +133,11 @@ pip install -r requirements.txt
 uvicorn main:app --port 8000 --reload
 ```
 The FastAPI documentation will be available at `http://127.0.0.1:8000/docs`, and the WebSocket will listen at `ws://127.0.0.1:8000/ws/transactions`.
+</details>
 
-### 2. Configure the Frontend (Vite + React)
+<details>
+<summary><b>2. Configure the Frontend (Vite + React)</b></summary>
+
 In a separate terminal shell, navigate to the frontend folder, install dependencies, and run Vite:
 ```bash
 cd frontend
@@ -106,3 +145,4 @@ npm install
 npm run dev
 ```
 Open your browser to `http://localhost:5173/`. The dashboard will automatically connect to the active stream, and the terminal ledger will start populating with real-time rows.
+</details>
